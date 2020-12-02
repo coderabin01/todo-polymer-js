@@ -6,8 +6,13 @@
   "author": "The Polymer Project Authors",
   "license": "BSD-3-Clause",
   "dependencies": {
+    "@polymer/lit-element": "^0.7.1",
     "@polymer/paper-checkbox": "latest",
     "@polymer/polymer": "latest",
+    "@vaadin/vaadin-button": "^2.4.0",
+    "@vaadin/vaadin-checkbox": "^2.5.0",
+    "@vaadin/vaadin-radio-button": "^1.5.1",
+    "@vaadin/vaadin-text-field": "^2.8.2",
     "@webcomponents/webcomponentsjs": "latest"
   }
 }
