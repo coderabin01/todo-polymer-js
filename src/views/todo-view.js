@@ -33,6 +33,8 @@ class TodoView extends LitElement {
 
   render() {
     return html`
+      <add-todo @on-add-todo="${this.addTodo}"></add-todo>
+
       <div class="input-layout" @keyup="${this.onKeyUp}">
         <vaadin-text-field
           placeholder="Task"
@@ -110,15 +112,17 @@ class TodoView extends LitElement {
     console.log(this.task);
   }
 
-  addTodo() {
+  addTodo(e) {
+    console.log(e.detail.todo)
     this.todos = [
       ...this.todos,
       {
-        task: this.task,
+        task: e.detail.todo,
         complete: false
       }
     ];
     this.task = "";
+
     console.log(this.todos);
   }
 }

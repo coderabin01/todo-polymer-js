@@ -15,7 +15,10 @@ import { PolymerElement, html } from "@polymer/polymer/polymer-element.js";
 import "@polymer/polymer/lib/elements/dom-if.js";
 import "@polymer/paper-checkbox/paper-checkbox.js";
 import { setPassiveTouchGestures } from "@polymer/polymer/lib/utils/settings";
+
+// files
 import "./views/todo-view.js";
+import "./components/add-todo/add-todo.js";
 
 class StartPolymer3 extends PolymerElement {
   static get properties() {
