@@ -19,6 +19,8 @@ import { setPassiveTouchGestures } from "@polymer/polymer/lib/utils/settings";
 // files
 import "./views/todo-view.js";
 import "./components/add-todo/add-todo.js";
+import "./components/todo-button/todo-button.js";
+import "./components/todo-item/todo-item.js";
 
 class StartPolymer3 extends PolymerElement {
   static get properties() {

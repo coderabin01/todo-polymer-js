@@ -33,35 +33,30 @@ class TodoView extends LitElement {
 
   render() {
     return html`
-      <add-todo @on-add-todo="${this.addTodo}"></add-todo>
 
-      <div class="input-layout" @keyup="${this.onKeyUp}">
-        <vaadin-text-field
-          placeholder="Task"
-          value="${this.task}"
-          @change="${this.updateTask}"
-        >
-        </vaadin-text-field>
-        <vaadin-button theme="primary" @click="${this.addTodo}">
-          Add Todo
-        </vaadin-button>
 
+
+      <div class="input-layout">
+        
+        <!-- Add Todo Component -->
+        <add-todo @on-add-todo="${this.addTodo}"></add-todo>
+        
+        <!-- Start of Todo List  -->
         <div class="todo-list">
-          ${this.applyFilter(this.todos).map(
-        todo =>
-          html`
+          ${this.applyFilter(this.todos).map(todo =>
+        html`
                 <div class="todo-item">
-                  <vaadin-checkbox
-                    ?checked="${todo.complete}"
-                    @change="${e =>
-              this.updateTodoStatus(todo, e.target.checked)}"
-                  >
-                    ${todo.task}</vaadin-checkbox
-                  >
+                
+                <!-- Todo Item Component -->
+                  <todo-item 
+                    .todo="${todo}" 
+                    @on-toggle="${this.updateTodoStatus}">
+                  </todo-item>
                 </div>
               `
       )}
         </div>
+        <!-- End of Todo List -->
       </div>
 
       <vaadin-radio-group
@@ -94,26 +89,19 @@ class TodoView extends LitElement {
     }
   }
 
-  updateTodoStatus(updatedTodo, complete) {
-    console.log("update status");
+  updateTodoStatus(e) {
+    const updatedTodo = e.detail.todo;
     this.todos = this.todos.map(todo =>
-      updatedTodo === todo ? { ...updatedTodo, complete } : todo
+      updatedTodo === todo ? { ...updatedTodo } : todo
     );
   }
 
-  onKeyUp(e) {
-    if (e.key === "Enter") {
-      this.addTodo();
-    }
-  }
-
-  updateTask(e) {
-    this.task = e.target.value;
-    console.log(this.task);
-  }
+  // updateTask(e) {
+  //   this.task = e.target.value;
+  //   console.log(this.task);
+  // }
 
   addTodo(e) {
-    console.log(e.detail.todo)
     this.todos = [
       ...this.todos,
       {
@@ -122,8 +110,6 @@ class TodoView extends LitElement {
       }
     ];
     this.task = "";
-
-    console.log(this.todos);
   }
 }
 
