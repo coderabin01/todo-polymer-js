@@ -1,4 +1,5 @@
 import { LitElement, html } from "@polymer/lit-element";
+
 import "@vaadin/vaadin-text-field";
 import "@vaadin/vaadin-button";
 import "@vaadin/vaadin-checkbox";
@@ -14,6 +15,7 @@ const VisibilityFilters = {
 class TodoView extends LitElement {
   static get properties() {
     return {
+      onAdd: { type: Function },
       todos: { type: Array },
       filter: { type: String },
       task: { type: String }
@@ -33,13 +35,10 @@ class TodoView extends LitElement {
 
   render() {
     return html`
-
-
-
       <div class="input-layout">
         
         <!-- Add Todo Component -->
-        <add-todo @on-add-todo="${this.addTodo}"></add-todo>
+        <add-todo .onAdd="${(task) => this.addTodo(task)}"></add-todo>
         
         <!-- Start of Todo List  -->
         <div class="todo-list">
@@ -89,6 +88,10 @@ class TodoView extends LitElement {
     }
   }
 
+  /**
+   * Updates the modified TODO in an array.
+   * @param {*} e 
+   */
   updateTodoStatus(e) {
     const updatedTodo = e.detail.todo;
     this.todos = this.todos.map(todo =>
@@ -96,20 +99,20 @@ class TodoView extends LitElement {
     );
   }
 
-  // updateTask(e) {
-  //   this.task = e.target.value;
-  //   console.log(this.task);
-  // }
-
-  addTodo(e) {
-    this.todos = [
-      ...this.todos,
-      {
-        task: e.detail.todo,
-        complete: false
-      }
-    ];
-    this.task = "";
+  /**
+   * Adds new TODO to an array
+   * @param {*} e 
+   */
+  addTodo(task) {
+    if (task) {
+      this.todos = [
+        ...this.todos,
+        {
+          task: task,
+          complete: false
+        }
+      ];
+    }
   }
 }
 

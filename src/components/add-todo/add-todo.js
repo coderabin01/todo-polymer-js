@@ -4,7 +4,8 @@ class AddTodo extends LitElement {
 
     static get properties() {
         return {
-            task: { type: String }
+            task: { type: String },
+            onAdd: { type: Function }
         }
     }
 
@@ -24,7 +25,7 @@ class AddTodo extends LitElement {
         </vaadin-text-field>
         
         <todo-button 
-            @on-click="${this.emitTodo}">
+            .isClicked="${() => { this.onAdd(this.task); this.task = '' }}">
             Add Todo
         </todo-button>
       `
@@ -36,7 +37,8 @@ class AddTodo extends LitElement {
      */
     onKeyUp(e) {
         if (e.key === "Enter") {
-            this.emitTodo();
+            this.onAdd(this.task);
+            this.task = "";
         }
     }
 
@@ -46,19 +48,6 @@ class AddTodo extends LitElement {
      */
     updateTask(e) {
         this.task = e.target.value;
-    }
-
-    /**
-     * Emits todo to parent component
-     */
-    emitTodo() {
-        if (this.task) {
-            let newTodo = new CustomEvent('on-add-todo', {
-                detail: { todo: this.task }
-            })
-            this.dispatchEvent(newTodo);
-            this.task = '';
-        }
     }
 }
 
