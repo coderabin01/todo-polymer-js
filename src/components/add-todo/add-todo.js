@@ -26,7 +26,7 @@ class AddTodo extends LitElement {
         
         <todo-button 
             .isClicked="${() => { this.onAdd(this.task); this.task = '' }}">
-            Add Todo
+            +
         </todo-button>
       `
     }

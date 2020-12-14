@@ -16,12 +16,18 @@ import "@polymer/polymer/lib/elements/dom-if.js";
 import "@polymer/paper-checkbox/paper-checkbox.js";
 import { setPassiveTouchGestures } from "@polymer/polymer/lib/utils/settings";
 
+// modules
+import "./router.js";
+
 // files
-import "./views/todo-view.js";
 import "./components/add-todo/add-todo.js";
 import "./components/todo-button/todo-button.js";
 import "./components/todo-item/todo-item.js";
 import "./components/filter-todo/filter-todo.js";
+
+// pages
+import "./views/todo-view.js";
+import "./modules/login/login.js";
 
 class StartPolymer3 extends PolymerElement {
   static get properties() {

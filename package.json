@@ -9,6 +9,7 @@
     "@polymer/lit-element": "^0.7.1",
     "@polymer/paper-checkbox": "latest",
     "@polymer/polymer": "latest",
+    "@vaadin/router": "^1.7.2",
     "@vaadin/vaadin-button": "^2.4.0",
     "@vaadin/vaadin-checkbox": "^2.5.0",
     "@vaadin/vaadin-radio-button": "^1.5.1",

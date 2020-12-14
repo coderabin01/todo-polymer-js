@@ -6,22 +6,48 @@ import "@vaadin/vaadin-checkbox";
 import "@vaadin/vaadin-radio-button/vaadin-radio-button";
 import "@vaadin/vaadin-radio-button/vaadin-radio-group";
 
-const VisibilityFilters = {
-  SHOW_ALL: "All",
-  SHOW_ACTIVE: "Active",
-  SHOW_COMPLETED: "Completed"
-};
+import { VisibilityFilters } from "./../constants/visibility-filters.js";
 
+
+/**
+ * `<todo-view>` Custom component of the todo app.
+ */
 class TodoView extends LitElement {
+  /**
+   * Static getter properties.
+   * 
+   * @returns {Object}
+   */
   static get properties() {
     return {
+      /**
+       * Function to return new todo for adding in any array.
+       * Passed in as props from parent.
+       * 
+       * @type {{onAdd: Function}}
+       */
       onAdd: { type: Function },
+      /**
+       * Function to return updated todo for updating todo status.
+       * Passed in as props from parent.
+       * 
+       * @type {{onToggle: Function}}
+       */
+      onToggle: { type: Function },
+      /**
+       * Array of todo items.
+       */
       todos: { type: Array },
+      /**
+       * Holds the filter value for filtering todos.
+       */
       filter: { type: String },
-      task: { type: String }
     };
   }
 
+  /**
+   * Initializes the default value to the props.
+   */
   constructor() {
     super();
     this.todos = [
@@ -30,9 +56,13 @@ class TodoView extends LitElement {
       { task: "three", complete: true }
     ];
     this.filter = VisibilityFilters.SHOW_ALL;
-    this.task = "";
   }
 
+  /**
+   * Render method.
+   * 
+   * @returns {customElements}
+   */
   render() {
     return html`
       <div class="input-layout">
@@ -49,7 +79,7 @@ class TodoView extends LitElement {
                 <!-- Todo Item Component -->
                   <todo-item 
                     .todo="${todo}" 
-                    @on-toggle="${this.updateTodoStatus}">
+                    .onToggle="${(todo) => this.updateTodoStatus(todo)}">
                   </todo-item>
                 </div>
               `
@@ -58,6 +88,7 @@ class TodoView extends LitElement {
         <!-- End of Todo List -->
       </div>
 
+      <!-- Start of filter radio buttons -->
       <vaadin-radio-group
         value="${this.filter}"
         @value-changed="${this.onFilterChange}"
@@ -70,13 +101,24 @@ class TodoView extends LitElement {
           `
       )}
       </vaadin-radio-group>
+      <!-- End of filter radio buttons -->
     `;
   }
 
+  /**
+   * Executes on selection of filter radio buttons.
+   * 
+   * @param {*} e 
+   */
   onFilterChange(e) {
     this.filter = e.detail.value;
   }
 
+  /**
+   * Returns the todo list by selected filter.
+   * 
+   * @param {*} todos 
+   */
   applyFilter(todos) {
     switch (this.filter) {
       case VisibilityFilters.SHOW_ACTIVE:
@@ -90,17 +132,16 @@ class TodoView extends LitElement {
 
   /**
    * Updates the modified TODO in an array.
+   * 
    * @param {*} e 
    */
-  updateTodoStatus(e) {
-    const updatedTodo = e.detail.todo;
-    this.todos = this.todos.map(todo =>
-      updatedTodo === todo ? { ...updatedTodo } : todo
-    );
+  updateTodoStatus(todoToUpdate) {
+    todoToUpdate.complete = !todoToUpdate.complete;
   }
 
   /**
-   * Adds new TODO to an array
+   * Adds new TODO to an array.
+   * 
    * @param {*} e 
    */
   addTodo(task) {

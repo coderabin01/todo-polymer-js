@@ -1,7 +1,6 @@
-import { LitElement, html } from "@polymer/lit-element";
+import { LitElement, html, css } from "lit-element";
 
 class TodoButton extends LitElement {
-
     /**
      * Defines the properties for the component.
      */
@@ -17,11 +16,40 @@ class TodoButton extends LitElement {
         }
     }
 
+    /**
+     * Styles for the todo-button
+     */
+    static get styles() {
+        return css`
+        button {
+            background: #3f51b5;
+            color: white;
+            border: none;
+            font-size: 22px;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            box-shadow: 3px 3px 2px 0px rgba(50, 50, 50, 0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+          }
+        
+          button:hover {
+            box-shadow: none;
+          }
+        
+          button:focus {
+            outline: none;
+          }
+        `;
+    }
+
+
     render() {
         return html`
-        <vaadin-button theme="primary" @click="${this.isClicked}">
+        <button @click="${this.isClicked}">
         <slot></slot>
-      </vaadin-button>`;
+      </button>`;
     }
 
     // onBtnClick() {
