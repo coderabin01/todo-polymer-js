@@ -13,8 +13,15 @@
 // so no need to change the symbol.
 import { PolymerElement, html } from "@polymer/polymer/polymer-element.js";
 import "@polymer/polymer/lib/elements/dom-if.js";
-import "@polymer/paper-checkbox/paper-checkbox.js";
 import { setPassiveTouchGestures } from "@polymer/polymer/lib/utils/settings";
+customElements.forcePolyfill = true;
+import '@webcomponents/custom-elements';
+
+// paper elements
+import "@polymer/paper-checkbox/paper-checkbox.js";
+import '@polymer/paper-input/paper-input.js';
+import '@polymer/iron-form/iron-form.js';
+import '@polymer/paper-button/paper-button.js';
 
 // modules
 import "./router.js";
@@ -94,6 +101,7 @@ class StartPolymer3 extends PolymerElement {
 
       <h1>Start Polymer 3.0</h1>
       <p>[[message]]</p>
+      [[pie]]
       <paper-checkbox id="omgpie" toggles noink checked="{{pie}}"
         >I like pie.</paper-checkbox
       >
