@@ -17,11 +17,15 @@ import { setPassiveTouchGestures } from "@polymer/polymer/lib/utils/settings";
 customElements.forcePolyfill = true;
 import '@webcomponents/custom-elements';
 
-// paper elements
+// ------------- Paper Input Fields ---------------
 import "@polymer/paper-checkbox/paper-checkbox.js";
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/iron-form/iron-form.js';
 import '@polymer/paper-button/paper-button.js';
+// paper dropdown menu
+// import '@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
+// import '@polymer/paper-item/paper-item.js';
+// import '@polymer/paper-listbox/paper-listbox.js';
 
 // modules
 import "./router.js";
