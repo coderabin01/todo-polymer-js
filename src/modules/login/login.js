@@ -24,25 +24,29 @@ class Login extends LitElement {
         return {
             /**
              * Remember me button to save credentials
+             * 
+             * @type {{type: Boolean}}
              */
             rememberMe: { type: Boolean, value: false },
             /**
              * Username field
+             * 
+             * @type {{type: String}}
              */
             username: { type: String },
             /**
              * Password field
+             * 
+             * @type {{type: String}}
              */
             password: { type: String },
+
+            selectedRoleId: { type: Number }
         }
     }
 
     constructor() {
         super();
-
-        this.rememberMe = false;
-
-        console.log(userRoles);
     }
 
     /**
@@ -52,36 +56,60 @@ class Login extends LitElement {
         this.rememberMe = !this.rememberMe;
     }
 
-    handleInput(key, value) {
-        this.loginForm[key] = value;
-    }
-
     /**
      * Setter for Username input field value
      * @param {*} e 
      */
-    addUsername(e) {
+    setUsername(e) {
         this.username = e.target.value;
+    }
+
+    /**
+     * Setter for Password input field value
+     * @param {*} e 
+     */
+    setPassword(e) {
+        this.password = e.target.value;
     }
 
     /**
      * 
      * @param {*} e 
      */
-    setUserId(e) {
-        this.selectedUserId = e.target.value;
+    setRoleId(e) {
+        this.selectedRoleId = e.target.value;
     }
 
     resetLoginForm() {
-
+        this.username = "";
+        this.password = "";
+        this.selectedRoleId = 0;
     }
 
     /**
      * Method to login
      */
     login() {
-        console.log(this.loginForm);
+        const loginForm = {
+            roleId: this.selectedRoleId,
+            username: this.username,
+            password: this.password,
+            rememberMe: this.rememberMe
+        }
+        console.log(loginForm);
     }
+
+    /**
+       * Finds the index of the selected status type from the array with three statuses.
+       *
+       * @param   {String}  selectedStatus
+       *
+       * @returns  {Number}
+       */
+    findIndexOfSelected(selectedStatus) {
+        return userRoles.findIndex(role => role.id === selectedStatus);
+    }
+
 
     /**
      * Lifecycle to render the element template
@@ -93,15 +121,15 @@ class Login extends LitElement {
             <!-- Login Form -->
                 <form >
                     <paper-dropdown-menu label="User Type">
-                        <paper-listbox slot="dropdown-content" selected="0" selected="0">
-                            ${userRoles.map((user) => {
-                return html`<paper-item .value="${user.id}" @click="${this.setUserId}">${user.name}</paper-item>`;
+                        <paper-listbox slot="dropdown-content" .selected="${this.findIndexOfSelected(this.selectedRoleId)}">
+                        ${userRoles.map((role) => {
+                return html`<paper-item .value="${role.id}" @click="${this.setRoleId}">${role.name}</paper-item>`;
             })}
                         </paper-listbox>
                     </paper-dropdown-menu>
 
-                    <paper-input label="Username" .value="${this.username}" @input="${this.addUsername}"></paper-input>
-                    <paper-input type="password" .value="${this.password}" label="Password" @input="${e => this.handleInput('password', e.target.value)}"></paper-input>
+                    <paper-input label="Username" .value="${this.username}" @input="${this.setUsername}"></paper-input>
+                    <paper-input type="password" label="Password" .value="${this.password}" @input="${this.setPassword}"></paper-input>
 
                     ${this.rememberMe}
                     <paper-checkbox ?checked="${this.rememberMe}" @click="${this.toggleCheckbox}">Remember me</paper-checkbox>
